@@ -1,5 +1,7 @@
 #![cfg_attr(all(not(debug_assertions), target_os = "windows"), windows_subsystem = "windows")]
 
+mod model;
+
 use std::{fs::read, io::Cursor, path::PathBuf, process::Command};
 
 use chrono::{TimeZone, Utc};
@@ -8,23 +10,22 @@ use specta::collect_types;
 use tauri::{AppHandle, PathResolver};
 use tauri_specta::ts;
 
-#[derive(serde::Deserialize)]
-struct ItchUploadsResponse {
-	uploads: Vec<ItchUpload>,
-}
+use model::*;
 
-#[derive(serde::Deserialize)]
-#[allow(unused)]
-struct ItchUpload {
-	id: i32,
-	created_at: String,
-	updated_at: String,
-	size: i32,
-}
+fn main() {
+	#[cfg(debug_assertions)]
+	ts::export(
+		collect_types![update_available, download_latest, run_game],
+		"../src/lib/tauri.ts",
+	)
+	.unwrap();
 
-#[derive(serde::Deserialize)]
-struct ItchDownloadLinkResponse {
-	url: String,
+	tauri::Builder::default()
+		.plugin(tauri_plugin_persisted_scope::init())
+		.plugin(tauri_plugin_window_state::Builder::default().build())
+		.invoke_handler(tauri::generate_handler![update_available, download_latest, run_game])
+		.run(tauri::generate_context!())
+		.expect("error while running tauri application");
 }
 
 #[tauri::command]
@@ -95,71 +96,6 @@ async fn run_game(app: AppHandle) -> Result<(), HolocureError> {
 	let _result = game_process.wait()?;
 
 	Ok(())
-}
-
-fn main() {
-	#[cfg(debug_assertions)]
-	ts::export(
-		collect_types![update_available, download_latest, run_game],
-		"../src/lib/tauri.ts",
-	)
-	.unwrap();
-
-	tauri::Builder::default()
-		.plugin(tauri_plugin_persisted_scope::init())
-		.plugin(tauri_plugin_window_state::Builder::default().build())
-		.invoke_handler(tauri::generate_handler![update_available, download_latest, run_game])
-		.run(tauri::generate_context!())
-		.expect("error while running tauri application");
-}
-
-#[derive(Debug, thiserror::Error)]
-pub enum HolocureError {
-	#[error(transparent)]
-	GenericError(#[from] std::io::Error),
-	#[error(transparent)]
-	RequestError(#[from] reqwest::Error),
-	#[error(transparent)]
-	JsonError(#[from] serde_json::Error),
-	#[error(transparent)]
-	ZipError(#[from] zip_extract::ZipError),
-	#[error(transparent)]
-	ZipExtractError(#[from] zip_extract::ZipExtractError),
-}
-
-impl HolocureError {
-	pub fn generic<S>(message: S) -> HolocureError
-	where
-		S: Into<String>,
-	{
-		Self::GenericError(std::io::Error::new(std::io::ErrorKind::Other, message.into()))
-	}
-}
-
-impl serde::Serialize for HolocureError {
-	fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-	where
-		S: serde::ser::Serializer,
-	{
-		serializer.serialize_str(self.to_string().as_ref())
-	}
-}
-
-#[derive(serde::Deserialize)]
-#[allow(unused)]
-#[serde(rename_all = "camelCase")]
-struct HolocureSettings {
-	game_dir: String,
-	launch_command: String,
-	local_updated_date: Option<String>,
-	itch_api: HolocureSettingsItch,
-}
-
-#[derive(serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
-struct HolocureSettingsItch {
-	key: String,
-	game_id: i32,
 }
 
 fn read_settings(path_resolver: PathResolver) -> Result<HolocureSettings, HolocureError> {
