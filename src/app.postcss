@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+
+body {
+	@apply overflow-y-hidden;
+}
+
+.btn {
+	@apply h-11 rounded-br-md rounded-tl-md border border-white bg-black/60 px-3 py-2 font-bold tracking-wider text-white;
+	@apply hover:enabled:-mb-[3px] hover:enabled:scale-110 hover:enabled:border-b-4 hover:enabled:border-black hover:enabled:bg-white hover:enabled:text-black;
+	@apply focus:enabled:-mb-[3px] focus:enabled:border-b-4 focus:enabled:border-black focus:enabled:bg-white focus:enabled:text-black focus:enabled:outline-none;
+	@apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.input {
+	@apply h-11 rounded-br-md rounded-tl-md border border-white bg-black/60 px-3 py-2 font-medium text-white;
+	@apply hover:enabled:-mb-[3px] hover:enabled:border-b-4 hover:enabled:border-black hover:enabled:bg-white hover:enabled:text-black;
+	@apply focus:ring-0 focus:enabled:-mb-[3px] focus:enabled:border-b-4 focus:enabled:border-black focus:enabled:bg-white focus:enabled:text-black focus:enabled:outline-none;
+	@apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.animate-scale {
+	animation: scale 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@tailwind utilities;
+
+@keyframes scale {
+	50% {
+		scale: 105%;
+	}
+}
