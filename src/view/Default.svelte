@@ -2,15 +2,17 @@
 	import { faCog, faSpinner } from "@fortawesome/free-solid-svg-icons";
 	import { faGithub } from "@fortawesome/free-brands-svg-icons";
 	import { fs, path } from "@tauri-apps/api";
+	import humanize from "humanize-duration";
 	import { fade } from "svelte/transition";
 	import Icon from "svelte-fa";
-	import { _ } from "svelte-i18n";
+	import { _, locale } from "svelte-i18n";
 	import { link } from "svelte-navigator";
 	import { settings } from "$lib/settings";
 	import { updateAvailable, runGame } from "$lib/tauri";
 
 	let playing: boolean = false;
 	let hasGame = gameAvailable();
+	let secondsPlayed = settings.settings.secondsPlayed;
 
 	async function gameAvailable(): Promise<boolean> {
 		return fs.exists(await path.join(settings.getCache("gameDir"), "HoloCure.exe"));
@@ -18,12 +20,15 @@
 
 	async function launch() {
 		playing = true;
-		await runGame();
+		const timePlayed = await runGame();
+		const currentTimePlayed = settings.getCache("secondsPlayed");
+		secondsPlayed = currentTimePlayed + timePlayed;
+		settings.set("secondsPlayed", secondsPlayed);
 		playing = false;
 	}
 </script>
 
-<div in:fade|local={{ duration: 200 }} class="grid w-1/2 flex-1 grid-cols-3 items-center gap-4">
+<div in:fade|local={{ duration: 200 }} class="grid w-1/2 flex-1 grid-cols-3 items-center gap-4 mb-2">
 	{#await Promise.all([hasGame, updateAvailable()])}
 		<button disabled class="btn">
 			<Icon icon={faSpinner} size="lg" class="mx-auto animate-spin" />
@@ -52,3 +57,6 @@
 		</a>
 	</div>
 </div>
+<span class="absolute bottom-0 left-1 font-medium text-sm text-white">
+	{$_("time_played", { values: { time: humanize(secondsPlayed * 1000, { language: $locale.split("-")[0], largest: 3 }) } })}
+</span>

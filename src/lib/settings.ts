@@ -1,9 +1,10 @@
-import { path, shell } from "@tauri-apps/api";
+import { path } from "@tauri-apps/api";
 import { SettingsManager } from "tauri-settings";
 
 export type LauncherSettings = {
 	gameDir: string;
 	launchCommand: string;
+	secondsPlayed: number,
 	localUpdatedDate: string | null;
 	itchApi: {
 		key: string;
@@ -15,6 +16,7 @@ export const settings = new SettingsManager<LauncherSettings>(
 	{
 		gameDir: await path.join(await path.appDataDir(), "Game"),
 		launchCommand: "",
+		secondsPlayed: 0,
 		localUpdatedDate: null,
 		itchApi: {
 			// Key from the official launcher config file. Goes to a throwaway HoloCure account.

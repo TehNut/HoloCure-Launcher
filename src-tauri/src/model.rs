@@ -58,6 +58,7 @@ impl serde::Serialize for HolocureError {
 pub struct HolocureSettings {
 	pub game_dir: String,
 	pub launch_command: String,
+	pub seconds_played: i64,
 	pub local_updated_date: Option<String>,
 	pub itch_api: HolocureSettingsItch,
 }

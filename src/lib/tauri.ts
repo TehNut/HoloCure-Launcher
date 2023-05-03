@@ -21,7 +21,7 @@ export function extractUpdate() {
 }
 
 export function runGame() {
-    return invoke<null>("run_game")
+    return invoke<number>("run_game")
 }
 
 export function openDir(path: string) {

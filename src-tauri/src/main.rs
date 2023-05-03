@@ -100,16 +100,20 @@ async fn extract_update(app: AppHandle) -> Result<(), HolocureError> {
 
 #[tauri::command]
 #[specta::specta]
-async fn run_game(app: AppHandle, window: Window) -> Result<(), HolocureError> {
+async fn run_game(app: AppHandle, window: Window) -> Result<i32, HolocureError> {
 	let settings = read_settings(app.path_resolver())?;
 	let executable = PathBuf::from(settings.game_dir).join("HoloCure.exe");
 
 	window.hide()?;
+	let game_started_at = Utc::now();
 	let mut game_process = Command::new(executable).spawn()?;
 	let _result = game_process.wait()?;
+	let game_ended_at = Utc::now();
 	window.show()?;
 
-	Ok(())
+	let playtime = game_ended_at.signed_duration_since(game_started_at);
+
+	Ok(i32::try_from(playtime.num_seconds()).ok().unwrap())
 }
 
 #[tauri::command]
