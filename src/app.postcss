@@ -19,6 +19,24 @@ body {
 	@apply disabled:cursor-not-allowed disabled:opacity-50;
 }
 
+/* BEGIN svelte-fa styles don't seem to apply properly, so we'll just use classes I guess */
+.icon {
+	@apply origin-center overflow-visible h-[1em] align-[-0.125em];
+}
+
+.icon.icon-xs {
+	@apply text-[0.75em];
+}
+
+.icon.icon-sm {
+	@apply text-[0.875em];
+}
+
+.icon.icon-lg {
+	@apply text-[1.33333em] leading-[0.75em] align-[-0.225em];
+}
+/* END */
+
 .animate-scale {
 	animation: scale 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

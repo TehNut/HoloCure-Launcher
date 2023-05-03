@@ -36,13 +36,13 @@
 	</label>
 	<div class="flex items-center gap-4 self-end">
 		<button class="btn" on:click={pickGameDir}>
-			<Icon icon={faMagnifyingGlass} size="lg" />
+			<Icon icon={faMagnifyingGlass} class="icon icon-lg" />
 		</button>
 		<button class="btn" on:click={() => openDir(settings.settings.gameDir)}>
-			<Icon icon={faFolder} size="lg" />
+			<Icon icon={faFolder} class="icon icon-lg" />
 		</button>
 		<button class="btn" on:click={() => (settings.settings.gameDir = settings.default.gameDir)}>
-			<Icon icon={faUndo} size="lg" />
+			<Icon icon={faUndo} class="icon icon-lg" />
 		</button>
 	</div>
 	<span />

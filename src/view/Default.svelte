@@ -31,10 +31,10 @@
 <div in:fade|local={{ duration: 200 }} class="grid w-1/2 flex-1 grid-cols-3 items-center gap-4 mb-2">
 	{#await Promise.all([hasGame, updateAvailable()])}
 		<button disabled class="btn">
-			<Icon icon={faSpinner} size="lg" class="mx-auto animate-spin" />
+			<Icon icon={faSpinner} class="icon icon-lg mx-auto animate-spin" />
 		</button>
 		<button disabled class="btn">
-			<Icon icon={faSpinner} size="lg" class="mx-auto animate-spin" />
+			<Icon icon={faSpinner} class="icon icon-lg mx-auto animate-spin" />
 		</button>
 	{:then [game, update]}
 		<button on:click={launch} disabled={!game || playing} class="btn">
@@ -50,10 +50,10 @@
 	{/await}
 	<div class="flex items-center gap-4">
 		<a href="/settings" use:link>
-			<button class="btn w-fit"><Icon size="lg" icon={faCog} /></button>
+			<button class="btn w-fit"><Icon icon={faCog} class="icon icon-lg" /></button>
 		</a>
 		<a href="https://github.com/TehNut" target="_blank">
-			<button class="btn w-fit"><Icon size="lg" icon={faGithub} /></button>
+			<button class="btn w-fit"><Icon icon={faGithub} class="icon icon-lg" /></button>
 		</a>
 	</div>
 </div>
