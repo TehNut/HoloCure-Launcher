@@ -16,7 +16,8 @@
 		"isolatedModules": true,
 		"baseUrl": "./",
 		"paths": {
-			"$lib/*": ["src/lib/*"]
+			"$lib/*": ["src/lib/*"],
+			"$locale/*": ["locale/*"]
 		}
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],

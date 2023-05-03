@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { path, fs } from "@tauri-apps/api";
 	import { fade } from "svelte/transition";
+	import { _ } from "svelte-i18n";
 	import { navigate } from "svelte-navigator";
 	import { download } from "tauri-plugin-upload-api";
 	import { getDownloadUrl, extractUpdate } from "$lib/tauri";
@@ -55,7 +56,7 @@
 		/>
 	</div>
 	<div class="text-center font-medium text-white">
-		<span class="capitalize">{state}</span>
+		<span class="capitalize">{$_("download." + state)}</span>
 		{#if state === "download"}
 			<span class="ml-1">{progress}%</span>
 		{/if}

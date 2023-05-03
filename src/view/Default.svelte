@@ -4,6 +4,7 @@
 	import { fs, path } from "@tauri-apps/api";
 	import { fade } from "svelte/transition";
 	import Icon from "svelte-fa";
+	import { _ } from "svelte-i18n";
 	import { link } from "svelte-navigator";
 	import { settings } from "$lib/settings";
 	import { updateAvailable, runGame } from "$lib/tauri";
@@ -32,13 +33,13 @@
 		</button>
 	{:then [game, update]}
 		<button on:click={launch} disabled={!game || playing} class="btn">
-			{playing ? "Playing..." : game ? "Play" : "Not found"}
+			{playing ? $_("button.playing") : game ? $_("button.play") : $_("button.not_found")}
 		</button>
 		{#if game}
-			<button disabled={!update} class="btn">{update ? "Update" : "Up to date"}</button>
+			<button disabled={!update} class="btn">{update ? $_("button.update_needed") : $_("button.update_not_needed")}</button>
 		{:else}
 			<a use:link href="/download">
-				<button class="btn"> Download </button>
+				<button class="btn">{$_("button.download")}</button>
 			</a>
 		{/if}
 	{/await}

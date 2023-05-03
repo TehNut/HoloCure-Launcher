@@ -3,6 +3,7 @@
 	import { dialog, shell } from "@tauri-apps/api";
 	import { fade } from "svelte/transition";
 	import Icon from "svelte-fa";
+	import { _ } from "svelte-i18n";
 	import { navigate } from "svelte-navigator";
 	import { settings } from "$lib/settings";
 
@@ -29,7 +30,7 @@
 
 <div out:fade|local={{ duration: 200 }} class="grid flex-1 grid-cols-4 items-center gap-x-4">
 	<label class="col-span-3 flex flex-col justify-between self-end">
-		<span class="mb-1 ml-4 text-sm font-medium group-hover:mb-px">Install Directory</span>
+		<span class="mb-1 ml-4 text-sm font-medium">{$_("settings.install_dir")}</span>
 		<input class="input" type="text" bind:value={settings.settings.gameDir} />
 	</label>
 	<div class="flex items-center gap-4 self-end">
@@ -44,7 +45,7 @@
 		</button>
 	</div>
 	<span />
-	<button class="btn" on:click={save}>Save</button>
-	<button class="btn" on:click={cancel}>Cancel</button>
+	<button class="btn" on:click={save}>{$_("button.save")}</button>
+	<button class="btn" on:click={cancel}>{$_("button.cancel")}</button>
 	<span />
 </div>

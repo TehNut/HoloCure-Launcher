@@ -1,0 +1,22 @@
+{
+	"button": {
+		"playing": "Playing...",
+		"play": "Play",
+		"not_found": "Not Found",
+		"download": "Download",
+		"update_needed": "Update",
+		"update_not_needed": "Up to date",
+		"save": "Save",
+		"cancel": "Cancel"
+	},
+	"settings": {
+		"install_dir": "Install Directory"
+	},
+	"download": {
+		"initialization": "Initializing...",
+		"download": "Downloading...",
+		"extract": "Extracting...",
+		"cleanup": "Cleaning up...",
+		"complete": "Done!"
+	}
+}
