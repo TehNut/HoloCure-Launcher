@@ -22,6 +22,8 @@ pub enum HolocureError {
 	#[error(transparent)]
 	GenericError(#[from] std::io::Error),
 	#[error(transparent)]
+	TauriError(#[from] tauri::Error),
+	#[error(transparent)]
 	RequestError(#[from] reqwest::Error),
 	#[error(transparent)]
 	JsonError(#[from] serde_json::Error),

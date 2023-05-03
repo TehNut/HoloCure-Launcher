@@ -7,7 +7,7 @@ use std::{fs::read, io::Cursor, path::PathBuf, process::Command};
 use chrono::{TimeZone, Utc};
 use reqwest::get;
 use specta::collect_types;
-use tauri::{AppHandle, PathResolver};
+use tauri::{AppHandle, PathResolver, Window};
 use tauri_specta::ts;
 
 use model::*;
@@ -100,12 +100,14 @@ async fn extract_update(app: AppHandle) -> Result<(), HolocureError> {
 
 #[tauri::command]
 #[specta::specta]
-async fn run_game(app: AppHandle) -> Result<(), HolocureError> {
+async fn run_game(app: AppHandle, window: Window) -> Result<(), HolocureError> {
 	let settings = read_settings(app.path_resolver())?;
 	let executable = PathBuf::from(settings.game_dir).join("HoloCure.exe");
 
+	window.hide()?;
 	let mut game_process = Command::new(executable).spawn()?;
 	let _result = game_process.wait()?;
+	window.show()?;
 
 	Ok(())
 }
