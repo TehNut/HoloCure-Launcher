@@ -6,8 +6,10 @@ use std::{fs::read, io::Cursor, path::PathBuf, process::Command};
 
 use chrono::{TimeZone, Utc};
 use reqwest::get;
+#[cfg(debug_assertions)]
 use specta::collect_types;
 use tauri::{AppHandle, PathResolver, Window};
+#[cfg(debug_assertions)]
 use tauri_specta::ts;
 
 use model::*;
