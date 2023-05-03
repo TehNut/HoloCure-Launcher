@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { faUndo, faFolder, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-	import { dialog, shell } from "@tauri-apps/api";
+	import { dialog } from "@tauri-apps/api";
 	import { fade } from "svelte/transition";
 	import Icon from "svelte-fa";
 	import { _ } from "svelte-i18n";
 	import { navigate } from "svelte-navigator";
 	import { settings } from "$lib/settings";
+	import { openDir } from "$lib/tauri";
 
 	async function pickGameDir() {
 		const selection = await dialog.open({
@@ -37,7 +38,7 @@
 		<button class="btn" on:click={pickGameDir}>
 			<Icon icon={faMagnifyingGlass} size="lg" />
 		</button>
-		<button class="btn" on:click={() => shell.open("file://" + settings.settings.gameDir)}>
+		<button class="btn" on:click={() => openDir(settings.settings.gameDir)}>
 			<Icon icon={faFolder} size="lg" />
 		</button>
 		<button class="btn" on:click={() => (settings.settings.gameDir = settings.default.gameDir)}>

@@ -15,7 +15,7 @@ use model::*;
 fn main() {
 	#[cfg(debug_assertions)]
 	ts::export(
-		collect_types![update_available, get_download_url, extract_update, run_game],
+		collect_types![update_available, get_download_url, extract_update, run_game, open_dir],
 		"../src/lib/tauri.ts",
 	)
 	.unwrap();
@@ -28,7 +28,8 @@ fn main() {
 			update_available,
 			get_download_url,
 			extract_update,
-			run_game
+			run_game,
+			open_dir
 		])
 		.run(tauri::generate_context!())
 		.expect("error while running tauri application");
@@ -83,11 +84,6 @@ async fn get_download_url(app: AppHandle) -> Result<String, HolocureError> {
 	let download_url = serde_json::from_str::<ItchDownloadLinkResponse>(&download_url)?;
 	let download_url = download_url.url;
 
-	// Download and extract to install dir
-	// let response = get(download_url).await?;
-	// let zip_bytes = Cursor::new(response.bytes().await?);
-	// zip_extract::extract(zip_bytes, &PathBuf::from(settings.game_dir), true)?;
-
 	Ok(download_url)
 }
 
@@ -111,6 +107,13 @@ async fn run_game(app: AppHandle) -> Result<(), HolocureError> {
 	let mut game_process = Command::new(executable).spawn()?;
 	let _result = game_process.wait()?;
 
+	Ok(())
+}
+
+#[tauri::command]
+#[specta::specta]
+async fn open_dir(path: &str) -> Result<(), HolocureError> {
+	open::that(path)?;
 	Ok(())
 }
 

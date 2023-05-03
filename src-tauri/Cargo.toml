@@ -27,6 +27,7 @@ tauri-plugin-upload = { git = "https://github.com/tauri-apps/plugins-workspace",
 reqwest = "0.11.17"
 chrono = "0.4.24"
 zip-extract = "0.1.2"
+open = "4.1.0"
 
 [features]
 # by default Tauri runs in production mode

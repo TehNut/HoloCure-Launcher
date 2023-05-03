@@ -24,4 +24,8 @@ export function runGame() {
     return invoke<null>("run_game")
 }
 
+export function openDir(path: string) {
+    return invoke<null>("open_dir", { path })
+}
+
 
