@@ -19,4 +19,4 @@ I have no involvement with the HoloCure team. So if you, the reader, are the par
 
 ## Images
 
-![Main menu](./.github/img/preview_1.png) ![Settings](./.github/img/preview_2.png)
+![Main menu](./.github/img/preview_1.png) ![Settings](./.github/img/preview_2.png) ![Download progress](./.github/img/preview_3.png)
