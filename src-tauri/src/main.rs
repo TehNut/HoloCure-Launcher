@@ -15,15 +15,21 @@ use model::*;
 fn main() {
 	#[cfg(debug_assertions)]
 	ts::export(
-		collect_types![update_available, download_latest, run_game],
+		collect_types![update_available, get_download_url, extract_update, run_game],
 		"../src/lib/tauri.ts",
 	)
 	.unwrap();
 
 	tauri::Builder::default()
+		.plugin(tauri_plugin_upload::init())
 		.plugin(tauri_plugin_persisted_scope::init())
 		.plugin(tauri_plugin_window_state::Builder::default().build())
-		.invoke_handler(tauri::generate_handler![update_available, download_latest, run_game])
+		.invoke_handler(tauri::generate_handler![
+			update_available,
+			get_download_url,
+			extract_update,
+			run_game
+		])
 		.run(tauri::generate_context!())
 		.expect("error while running tauri application");
 }
@@ -52,7 +58,7 @@ async fn update_available(app: AppHandle) -> Result<bool, HolocureError> {
 
 #[tauri::command]
 #[specta::specta]
-async fn download_latest(app: AppHandle) -> Result<bool, HolocureError> {
+async fn get_download_url(app: AppHandle) -> Result<String, HolocureError> {
 	let settings = read_settings(app.path_resolver())?;
 
 	// Get Itch data for latest upload
@@ -74,16 +80,26 @@ async fn download_latest(app: AppHandle) -> Result<bool, HolocureError> {
 	.await?
 	.text()
 	.await?;
-	println!("{}", &download_url);
 	let download_url = serde_json::from_str::<ItchDownloadLinkResponse>(&download_url)?;
 	let download_url = download_url.url;
 
 	// Download and extract to install dir
-	let response = get(download_url).await?;
-	let zip_bytes = Cursor::new(response.bytes().await?);
+	// let response = get(download_url).await?;
+	// let zip_bytes = Cursor::new(response.bytes().await?);
+	// zip_extract::extract(zip_bytes, &PathBuf::from(settings.game_dir), true)?;
+
+	Ok(download_url)
+}
+
+#[tauri::command]
+#[specta::specta]
+async fn extract_update(app: AppHandle) -> Result<(), HolocureError> {
+	let settings = read_settings(app.path_resolver())?;
+	let file = read(PathBuf::from(app.path_resolver().app_data_dir().unwrap()).join("HoloCure.zip"))?;
+	let zip_bytes = Cursor::new(file);
 	zip_extract::extract(zip_bytes, &PathBuf::from(settings.game_dir), true)?;
 
-	Ok(true)
+	Ok(())
 }
 
 #[tauri::command]

@@ -23,10 +23,35 @@ body {
 	animation: scale 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+.animate-wiggle {
+	animation: wiggle 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 @tailwind utilities;
 
 @keyframes scale {
 	50% {
 		scale: 105%;
+	}
+}
+
+@keyframes wiggle {
+	0% {
+		transform: rotate(0deg);
+	}
+	20% {
+		transform: rotate(2deg);
+	}
+	40% {
+		transform: rotate(-4deg);
+	}
+	60% {
+		transform: rotate(0deg);
+	}
+	80% {
+		transform: rotate(4deg);
+	}
+	100% {
+		transform: rotate(0deg);
 	}
 }

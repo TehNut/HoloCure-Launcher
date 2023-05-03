@@ -20,6 +20,7 @@
         "readDir": true,
         "readFile": true,
         "writeFile": true,
+        "removeFile": true,
         "exists": true,
         "scope": [
           "$APPDATA",

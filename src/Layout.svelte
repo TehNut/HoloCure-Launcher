@@ -2,6 +2,7 @@
 	import { Route, useLocation } from "svelte-navigator";
 	import DefaultView from "./view/Default.svelte";
 	import SettingsView from "./view/Settings.svelte";
+	import DownloadView from "./view/Download.svelte";
 
 	const location = useLocation();
 
@@ -10,10 +11,11 @@
 
 <main class="relative z-10 flex min-h-screen flex-col items-center justify-between">
 	<div class="{isHome ? 'h-80' : 'h-40'} flex-none transition-[height]">
-		<img class="h-full drop-shadow-lg" src="/icon.png" alt="HoloCure Logo" />
+		<img class="h-full drop-shadow-lg" src="/logo.png" alt="HoloCure Logo" />
 	</div>
 	<Route path="/" component={DefaultView} />
 	<Route path="/settings" component={SettingsView} />
+	<Route path="/download" component={DownloadView} />
 </main>
 <div class="absolute inset-0">
 	<div class="absolute inset-0 bg-[#50c0f9]" />

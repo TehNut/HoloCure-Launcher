@@ -12,8 +12,12 @@ export function updateAvailable() {
     return invoke<boolean>("update_available")
 }
 
-export function downloadLatest() {
-    return invoke<boolean>("download_latest")
+export function getDownloadUrl() {
+    return invoke<string>("get_download_url")
+}
+
+export function extractUpdate() {
+    return invoke<null>("extract_update")
 }
 
 export function runGame() {
