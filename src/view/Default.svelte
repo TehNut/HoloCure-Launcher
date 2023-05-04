@@ -52,7 +52,7 @@
 		<a href="/settings" use:link tabindex="-1">
 			<button class="btn w-fit"><Icon icon={faCog} class="icon icon-lg" /></button>
 		</a>
-		<a href="https://github.com/TehNut" target="_blank" tabindex="-1">
+		<a href="https://github.com/TehNut/HoloCure-Launcher" target="_blank" tabindex="-1">
 			<button class="btn w-fit"><Icon icon={faGithub} class="icon icon-lg" /></button>
 		</a>
 	</div>
