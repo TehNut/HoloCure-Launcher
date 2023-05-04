@@ -19,8 +19,8 @@
 </main>
 <div class="absolute inset-0">
 	<div class="absolute inset-0 bg-[#50c0f9]" />
-	<div class="stripes absolute inset-0 top-auto h-1/2 opacity-5" />
-	<div class="absolute inset-0 bg-gradient-to-b from-[#50c0f9] via-[#50c0f9] via-70% to-black/10" />
+	<div class="stripes absolute inset-0 top-auto h-full opacity-5" />
+	<div class="absolute inset-0 bg-gradient-to-b from-[#50c0f9] via-[#50c0f9] {isHome ? "via-70%" : "via-40%"} to-black/10" />
 </div>
 
 <style>
