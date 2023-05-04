@@ -43,16 +43,16 @@
 		{#if game}
 			<button disabled={!update} class="btn">{update ? $_("button.update_needed") : $_("button.update_not_needed")}</button>
 		{:else}
-			<a use:link href="/download">
+			<a use:link href="/download" tabindex="-1">
 				<button class="btn">{$_("button.download")}</button>
 			</a>
 		{/if}
 	{/await}
 	<div class="flex items-center gap-4">
-		<a href="/settings" use:link>
+		<a href="/settings" use:link tabindex="-1">
 			<button class="btn w-fit"><Icon icon={faCog} class="icon icon-lg" /></button>
 		</a>
-		<a href="https://github.com/TehNut" target="_blank">
+		<a href="https://github.com/TehNut" target="_blank" tabindex="-1">
 			<button class="btn w-fit"><Icon icon={faGithub} class="icon icon-lg" /></button>
 		</a>
 	</div>
