@@ -51,7 +51,7 @@
 			src="/icon.png"
 			alt="HoloCure Icon"
 			style="--progress:{Math.min(progress - 3.5, 1000)}%"
-			class="absolute -top-2.5 left-[--progress] w-16 transition-[left]"
+			class="absolute -top-2.5 left-[--progress] w-16 transition-[left] pointer-events-none"
 			class:animate-wiggle={progress < 100}
 		/>
 	</div>
